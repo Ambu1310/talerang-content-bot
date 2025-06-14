@@ -1,11 +1,14 @@
 import os
 from openai import OpenAI
 
-client = OpenAI(api_key=os.getenv("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
-"))
+# Securely load your OpenAI key from environment variable
+client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 def generate_post(topic, audience):
-    prompt = f"Generate a short, engaging LinkedIn post for the audience: {audience}. Topic: {topic}. Keep it educational and interesting."
+    prompt = (
+        f"Generate a short, engaging LinkedIn post for the audience: {audience}. "
+        f"Topic: {topic}. Keep it educational, interesting, and aligned with EdTech trends."
+    )
     
     response = client.chat.completions.create(
         model="gpt-4",
