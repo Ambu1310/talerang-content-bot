@@ -1,14 +1,18 @@
 import streamlit as st
-import openai
+from openai import OpenAI
 
-openai.api_key = st.secrets["OPENAI_API_KEY"]
+# Initialize the OpenAI client with API key from Streamlit secrets
+client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
 
 def generate_post(topic, audience):
-    prompt = f"Generate a short, engaging LinkedIn post for the audience: {audience}. Topic: {topic}. Keep it educational and interesting."
+    prompt = f"Generate a short, engaging LinkedIn post for the audience: {audience}. Topic: {topic}. Keep it educational, professional, and shareable."
 
-    response = openai.ChatCompletion.create(
+    response = client.chat.completions.create(
         model="gpt-4",
-        messages=[{"role": "user", "content": prompt}],
+        messages=[
+            {"role": "user", "content": prompt}
+        ],
         temperature=0.7
     )
-    return response.choices[0].message["content"].strip()
+
+    return response.choices[0].message.content.strip()
