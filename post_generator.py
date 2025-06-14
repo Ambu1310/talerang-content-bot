@@ -2,7 +2,7 @@ import os
 from openai import OpenAI
 
 # Securely load your OpenAI key from environment variable
-client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"]("OPENAI_API_KEY"))
 
 def generate_post(topic, audience):
     prompt = (
