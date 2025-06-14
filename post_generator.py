@@ -1,19 +1,14 @@
-import os
+import streamlit as st
 from openai import OpenAI
 
-# Securely load your OpenAI key from environment variable
-client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"]("OPENAI_API_KEY"))
+client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
 
 def generate_post(topic, audience):
-    prompt = (
-        f"Generate a short, engaging LinkedIn post for the audience: {audience}. "
-        f"Topic: {topic}. Keep it educational, interesting, and aligned with EdTech trends."
-    )
-    
+    prompt = f"Generate a short, engaging LinkedIn post for the audience: {audience}. Topic: {topic}. Keep it educational and interesting."
+
     response = client.chat.completions.create(
         model="gpt-4",
         messages=[{"role": "user", "content": prompt}],
         temperature=0.7
     )
-
     return response.choices[0].message.content.strip()
